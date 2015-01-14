@@ -7,5 +7,6 @@
     <string name="title_activity_choix_port">ChoixPort</string>
     <string name="title_activity_creer_partie">CreerPartie</string>
     <string name="title_activity_selected_cards">SelectedCards</string>
+    <string name="title_activity_liste_bloque">ListeBloque</string>
 
 </resources>

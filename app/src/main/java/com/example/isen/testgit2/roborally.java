@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class roborally extends ActionBarActivity {
 
-    //private ImageView degatsPhoto ;
+
     private Button powerDown;
     private TextView numberLife;
     private TextView numberDegats;
@@ -27,7 +27,7 @@ public class roborally extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roborally);
-        //degatsPhoto = (ImageView) findViewById(R.id.imageView2);
+
         powerDown = (Button) findViewById(R.id.buttonPowerDown);
         numberLife = (TextView) findViewById((R.id.textViewNumberLife));
         numberDegats = (TextView) findViewById(R.id.textViewNumberDegats);

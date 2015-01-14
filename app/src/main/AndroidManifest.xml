@@ -26,6 +26,10 @@
             android:name=".CreerPartie"
             android:label="@string/title_activity_creer_partie" >
         </activity>
+        <activity
+            android:name=".SelectedCards"
+            android:label="@string/title_activity_selected_cards" >
+        </activity>
     </application>
 
 </manifest>

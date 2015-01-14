@@ -55,7 +55,20 @@ public class roborally extends ActionBarActivity {
 
             }
         });
+        isReady.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isReady.isChecked()) {
 
+
+                }
+                else {
+
+
+                }
+
+            }
+        });
     }
 
 

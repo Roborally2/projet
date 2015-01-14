@@ -4,14 +4,58 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class roborally extends ActionBarActivity {
+
+    //private ImageView degatsPhoto ;
+    private Button powerDown;
+    private TextView numberLife;
+    private TextView numberDegats;
+    private TextView chrono;
+    private Button selectedCards;
+    private Button listCards;
+    private CheckBox isReady;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roborally);
+        //degatsPhoto = (ImageView) findViewById(R.id.imageView2);
+        powerDown = (Button) findViewById(R.id.buttonPowerDown);
+        numberLife = (TextView) findViewById((R.id.textViewNumberLife));
+        numberDegats = (TextView) findViewById(R.id.textViewNumberDegats);
+        chrono = (TextView) findViewById(R.id.textViewChrono);
+        selectedCards = (Button) findViewById(R.id.buttonSelectedCards);
+        listCards = (Button) findViewById(R.id.buttonListCards);
+        isReady = (CheckBox) findViewById(R.id.checkBoxIsReady);
+
+
+        selectedCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        listCards.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        powerDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
 
@@ -37,5 +81,3 @@ public class roborally extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-//Mathurin est moche
-//Tanguy aussi

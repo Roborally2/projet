@@ -1,6 +1,7 @@
 package com.example.isen.testgit2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -117,6 +118,10 @@ public class ChoixPort extends Activity {
         protected void onPostExecute(Void result) {
             textResponse.setText(response);
             super.onPostExecute(result);
+            if(response=="connecté"){
+                Intent choix_port = new Intent(ChoixPort.this,roborally.class);
+                startActivity(choix_port);
+            }
         }
 
     }

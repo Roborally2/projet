@@ -16,17 +16,39 @@
         android:layout_alignParentStart="true"
         android:id="@+id/LayoutPrincipal">
 
-        <ListView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Liste des cartes selectionnées"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal|top"
+            android:visibility="visible" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="146dp"
             android:id="@+id/listViewSelectedCards"
-            android:layout_gravity="center" />
+            android:layout_gravity="center_horizontal|top"
+            android:footerDividersEnabled="false"
+            android:focusableInTouchMode="false"
+            android:fastScrollAlwaysVisible="false"
+            android:visibility="visible"
+            android:choiceMode="multipleChoice" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="154dp"
+            android:id="@+id/listViewHandCards"
+            android:layout_gravity="center_horizontal|bottom"
+            android:visibility="visible"
+            android:choiceMode="multipleChoice" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Liste des cartes à selectionner"
-            android:id="@+id/textView2"
-            android:layout_gravity="center_horizontal|top" />
+            android:text="Liste de cartes en main"
+            android:id="@+id/textView3"
+            android:layout_gravity="center"
+            android:visibility="visible" />
     </FrameLayout>
 </RelativeLayout>

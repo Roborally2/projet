@@ -4,14 +4,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 
 public class SelectedCards extends ActionBarActivity {
+
+    private ListView selectedCards;
+    private ListView handCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_cards);
+
+        selectedCards = (ListView) findViewById(R.id.listViewSelectedCards);
+        handCards = (ListView) findViewById(R.id.listViewHandCards);
+
     }
 
 

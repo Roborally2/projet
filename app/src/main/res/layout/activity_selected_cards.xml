@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="horizontal"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -33,15 +34,18 @@
             android:focusableInTouchMode="false"
             android:fastScrollAlwaysVisible="false"
             android:visibility="visible"
-            android:choiceMode="multipleChoice" />
+            android:choiceMode="multipleChoice"
+            style="@style/AppTheme" />
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="154dp"
+            android:layout_height="148dp"
             android:id="@+id/listViewHandCards"
             android:layout_gravity="center_horizontal|bottom"
             android:visibility="visible"
-            android:choiceMode="multipleChoice" />
+            android:choiceMode="singleChoice"
+            style="@style/AppTheme"
+            android:clickable="true" />
 
         <TextView
             android:layout_width="wrap_content"

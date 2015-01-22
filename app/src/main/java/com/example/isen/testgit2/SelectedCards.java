@@ -4,7 +4,11 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SelectedCards extends ActionBarActivity {
@@ -19,6 +23,29 @@ public class SelectedCards extends ActionBarActivity {
 
         selectedCards = (ListView) findViewById(R.id.listViewSelectedCards);
         handCards = (ListView) findViewById(R.id.listViewHandCards);
+
+        List<String> dataAction = new ArrayList<String>();
+        dataAction.add("Tourner à gauche");
+        dataAction.add("Tourner à droite");
+        dataAction.add("Demi-tour");
+
+        List<Integer> dataPriorite = new ArrayList<Integer>();
+        dataPriorite.add(50);
+        dataPriorite.add(250);
+        dataPriorite.add(550);
+
+
+        StringAdapter adapter = new StringAdapter(getApplicationContext(), dataAction,dataPriorite);
+        // On dit à la ListView de se remplir via cet adapter
+        handCards.setAdapter(adapter);
+        /*
+         * Si vos données changent, penser à utiliser
+         * la fonction adapter.notifyDataSetChanged();
+        * qui aura pour effet de notifier le changement de données
+        * et de recharger la liste automatiquement.
+        */
+        adapter.notifyDataSetChanged();
+
 
     }
 

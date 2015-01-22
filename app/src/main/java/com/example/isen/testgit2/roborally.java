@@ -2,6 +2,7 @@ package com.example.isen.testgit2;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +10,19 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class roborally extends ActionBarActivity {
@@ -35,6 +49,28 @@ public class roborally extends ActionBarActivity {
         selectedCards = (Button) findViewById(R.id.buttonSelectedCards);
         listCards = (Button) findViewById(R.id.buttonListCards);
         isReady = (CheckBox) findViewById(R.id.checkBoxIsReady);
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost("http://localhost/android/reception.php");
+        String msg ="coucou";
+        Log.i("LEZ",msg);
+        if(msg.length()>0){
+            try{
+                List<NameValuePair> donnees = new ArrayList<NameValuePair>(1);
+                donnees.add(new BasicNameValuePair("message", msg));
+                post.setEntity(new UrlEncodedFormEntity(donnees));
+                client.execute(post);
+                Toast.makeText(this, "Ajout du nouveau joueur effectué !", Toast.LENGTH_SHORT);
+            }
+            catch(ClientProtocolException e){
+                e.printStackTrace();
+            }
+            catch(IOException ev){
+                ev.printStackTrace();
+            }
+        }
+        else{
+            Toast.makeText(this,"Echec !", Toast.LENGTH_SHORT);
+        }
 
 
         selectedCards.setOnClickListener(new View.OnClickListener() {

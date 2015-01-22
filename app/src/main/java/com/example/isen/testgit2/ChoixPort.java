@@ -3,27 +3,43 @@ package com.example.isen.testgit2;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 
 public class ChoixPort extends Activity {
 
     TextView textResponse;
-    EditText editTextAddress, editTextPort;
+    CheckBox pret;
+    EditText editTextAddress, editTextPort, editTextUsername;
     Button buttonConnect, buttonClear;
+    String rep;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +51,8 @@ public class ChoixPort extends Activity {
         buttonConnect = (Button)findViewById(R.id.connect);
         buttonClear = (Button)findViewById(R.id.clear);
         textResponse = (TextView)findViewById(R.id.response);
+        editTextUsername = (EditText)findViewById(R.id.username);
+        pret = (CheckBox)findViewById(R.id.checkBoxpret);
 
         buttonConnect.setOnClickListener(buttonConnectOnClickListener);
 
@@ -54,7 +72,7 @@ public class ChoixPort extends Activity {
                 public void onClick(View arg0) {
                     MyClientTask myClientTask = new MyClientTask(
                             editTextAddress.getText().toString(),
-                            Integer.parseInt(editTextPort.getText().toString()));
+                            Integer.parseInt(editTextPort.getText().toString()),editTextUsername.getText().toString());
                     myClientTask.execute();
                 }};
 
@@ -62,11 +80,13 @@ public class ChoixPort extends Activity {
 
         String dstAddress;
         int dstPort;
+        String dstUsername;
         String response = "";
 
-        MyClientTask(String addr, int port){
+        MyClientTask(String addr, int port, String user){
             dstAddress = addr;
             dstPort = port;
+            dstUsername = user;
         }
 
         @Override
@@ -83,6 +103,7 @@ public class ChoixPort extends Activity {
 
                 int bytesRead;
                 InputStream inputStream = socket.getInputStream();
+
 
     /*
      * notice:
@@ -117,11 +138,36 @@ public class ChoixPort extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             textResponse.setText(response);
+            rep=response;
             super.onPostExecute(result);
-            if(response=="connecté"){
+
+            /*if(rep.equals("connect")){
+                HttpClient client = new DefaultHttpClient();
+                HttpPost post = new HttpPost("http://localhost/android/reception.php");
+                String msg ="coucou";
+                Log.i("LEZ", msg);
+                if(msg.length()>0){
+                    try{
+                        List<NameValuePair> donnees = new ArrayList<NameValuePair>(1);
+                        donnees.add(new BasicNameValuePair("message", msg));
+                        post.setEntity(new UrlEncodedFormEntity(donnees));
+                        client.execute(post);
+                        Log.d("tag","ok");
+                    }
+                    catch(ClientProtocolException e){
+                        e.printStackTrace();
+                    }
+                    catch(IOException ev){
+                        ev.printStackTrace();
+                    }
+                }
+                else{
+                    Log.d("tag2","echec");
+                }
                 Intent choix_port = new Intent(ChoixPort.this,roborally.class);
                 startActivity(choix_port);
-            }
+
+            }*/
         }
 
     }

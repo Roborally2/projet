@@ -1,28 +1,16 @@
 package com.example.isen.testgit2;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class roborally extends ActionBarActivity {
@@ -32,10 +20,15 @@ public class roborally extends ActionBarActivity {
     private TextView numberLife;
     private TextView numberDegats;
     private TextView chrono;
-    private Button selectedCards;
+    private Button optionCards;
     private Button listCards;
     private CheckBox isReady;
 
+
+    ArrayList<Integer> dataPrioriteDeck = new ArrayList<Integer>();
+    ArrayList<Integer> dataPrioriteSelected = new ArrayList<Integer>();
+    ArrayList<String> dataActionDeck = new ArrayList<String>();
+    ArrayList<String> dataActionSelected = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,34 +39,45 @@ public class roborally extends ActionBarActivity {
         numberLife = (TextView) findViewById((R.id.textViewNumberLife));
         numberDegats = (TextView) findViewById(R.id.textViewNumberDegats);
         chrono = (TextView) findViewById(R.id.textViewChrono);
-        selectedCards = (Button) findViewById(R.id.buttonSelectedCards);
+        optionCards = (Button) findViewById(R.id.buttonSelectedCards);
         listCards = (Button) findViewById(R.id.buttonListCards);
         isReady = (CheckBox) findViewById(R.id.checkBoxIsReady);
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("http://localhost/android/reception.php");
-        String msg ="coucou";
-        Log.i("LEZ",msg);
-        if(msg.length()>0){
-            try{
-                List<NameValuePair> donnees = new ArrayList<NameValuePair>(1);
-                donnees.add(new BasicNameValuePair("message", msg));
-                post.setEntity(new UrlEncodedFormEntity(donnees));
-                client.execute(post);
-                Toast.makeText(this, "Ajout du nouveau joueur effectué !", Toast.LENGTH_SHORT);
-            }
-            catch(ClientProtocolException e){
-                e.printStackTrace();
-            }
-            catch(IOException ev){
-                ev.printStackTrace();
-            }
+
+
+        Intent intent = getIntent();
+        Bundle extras = getIntent().getExtras();
+
+
+
+
+        if (extras == null) {
+            //On récupére nos cartes via le serveur
+
+            dataActionDeck.add("Tourner à gauche");
+            dataActionDeck.add("Tourner à droite");
+            dataActionDeck.add("Demi-tour");
+            dataActionDeck.add("Tourner à gauche");
+            dataActionDeck.add("Tourner à droite");
+            dataActionDeck.add("Demi-tour");
+
+
+            dataPrioriteDeck.add(50);
+            dataPrioriteDeck.add(250);
+            dataPrioriteDeck.add(550);
+            dataPrioriteDeck.add(50);
+            dataPrioriteDeck.add(250);
+            dataPrioriteDeck.add(550);
         }
-        else{
-            Toast.makeText(this,"Echec !", Toast.LENGTH_SHORT);
+        else {
+            dataActionDeck = extras.getStringArrayList("dataActionDeck");
+            dataActionSelected = extras.getStringArrayList("dataActionSelected");
+            dataPrioriteDeck = extras.getIntegerArrayList("dataPrioriteDeck");
+            dataPrioriteSelected = extras.getIntegerArrayList("dataPrioriteSelected");
+
         }
 
 
-        selectedCards.setOnClickListener(new View.OnClickListener() {
+        optionCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -82,6 +86,14 @@ public class roborally extends ActionBarActivity {
         listCards.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(roborally.this,SelectedCards.class);
+                intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
+                intent.putIntegerArrayListExtra("dataPrioriteDeck",dataPrioriteDeck);
+                intent.putIntegerArrayListExtra("dataPrioriteSelected",dataPrioriteSelected);
+                intent.putStringArrayListExtra("dataActionSelected",dataActionSelected);
+
+                startActivity(intent);
 
             }
         });

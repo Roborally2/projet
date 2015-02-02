@@ -65,7 +65,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cartes bloquées/selectionées"
+            android:text="Cartes Options"
             android:id="@+id/buttonSelectedCards"
             android:layout_gravity="center_horizontal"
             android:clickable="true" />

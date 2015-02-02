@@ -1,5 +1,6 @@
 package com.example.isen.testgit2;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,27 +35,22 @@ public class SelectedCards extends ActionBarActivity {
 
         setContentView(R.layout.activity_selected_cards);
 
+        Intent intent = getIntent();
+
         selectedCards = (ListView) findViewById(R.id.listViewSelectedCards);
         handCards = (ListView) findViewById(R.id.listViewHandCards);
 
         buttonBack = (Button) findViewById(R.id.buttonBack);
 
 
-        dataActionDeck.add("Tourner à gauche");
-        dataActionDeck.add("Tourner à droite");
-        dataActionDeck.add("Demi-tour");
-        dataActionDeck.add("Tourner à gauche");
-        dataActionDeck.add("Tourner à droite");
-        dataActionDeck.add("Demi-tour");
 
+        if (intent != null) {
+            dataActionDeck = intent.getStringArrayListExtra("dataActionDeck");
+            dataActionSelected = intent.getStringArrayListExtra("dataActionSelected");
+            dataPrioriteDeck = intent.getIntegerArrayListExtra("dataPrioriteDeck");
+            dataPrioriteSelected = intent.getIntegerArrayListExtra("dataPrioriteSelected");
 
-        dataPrioriteDeck.add(50);
-        dataPrioriteDeck.add(250);
-        dataPrioriteDeck.add(550);
-        dataPrioriteDeck.add(50);
-        dataPrioriteDeck.add(250);
-        dataPrioriteDeck.add(550);
-
+        }
 
         final StringAdapter adapter = new StringAdapter(getApplicationContext(), dataActionDeck,dataPrioriteDeck);
         final StringAdapter adapter2 = new StringAdapter(getApplicationContext(), dataActionSelected,dataPrioriteSelected);
@@ -109,10 +105,18 @@ public class SelectedCards extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(getBaseContext(), roborally.class);
+                intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
+                intent.putIntegerArrayListExtra("dataPrioriteDeck",dataPrioriteDeck);
+                intent.putIntegerArrayListExtra("dataPrioriteSelected",dataPrioriteSelected);
+                intent.putStringArrayListExtra("dataActionSelected",dataActionSelected);
+                startActivity(intent);
+
             }
         });
 
     }
+    /*
     @Override
     protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -148,6 +152,7 @@ public class SelectedCards extends ActionBarActivity {
         * qui aura pour effet de notifier le changement de données
         * et de recharger la liste automatiquement.
         */
+    /*
         adapter.notifyDataSetChanged();
         adapter2.notifyDataSetChanged();
 
@@ -186,7 +191,7 @@ public class SelectedCards extends ActionBarActivity {
             }
         });
     }
-
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

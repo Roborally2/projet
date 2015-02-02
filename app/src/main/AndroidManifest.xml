@@ -31,10 +31,6 @@
             android:label="@string/title_activity_selected_cards" >
         </activity>
         <activity
-            android:name=".ListeBloque"
-            android:label="@string/title_activity_liste_bloque" >
-        </activity>
-        <activity
             android:name=".Home"
             android:label="@string/title_activity_home" >
         </activity>

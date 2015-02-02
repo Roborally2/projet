@@ -4,8 +4,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,29 +19,48 @@ public class SelectedCards extends ActionBarActivity {
 
     private ListView selectedCards;
     private ListView handCards;
+    private Button buttonBack;
+
+    ArrayList<Integer> dataPrioriteDeck = new ArrayList<Integer>();
+    ArrayList<Integer> dataPrioriteSelected = new ArrayList<Integer>();
+    ArrayList<String> dataActionDeck = new ArrayList<String>();
+    ArrayList<String> dataActionSelected = new ArrayList<String>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_selected_cards);
 
         selectedCards = (ListView) findViewById(R.id.listViewSelectedCards);
         handCards = (ListView) findViewById(R.id.listViewHandCards);
 
-        List<String> dataAction = new ArrayList<String>();
-        dataAction.add("Tourner à gauche");
-        dataAction.add("Tourner à droite");
-        dataAction.add("Demi-tour");
-
-        List<Integer> dataPriorite = new ArrayList<Integer>();
-        dataPriorite.add(50);
-        dataPriorite.add(250);
-        dataPriorite.add(550);
+        buttonBack = (Button) findViewById(R.id.buttonBack);
 
 
-        StringAdapter adapter = new StringAdapter(getApplicationContext(), dataAction,dataPriorite);
+        dataActionDeck.add("Tourner à gauche");
+        dataActionDeck.add("Tourner à droite");
+        dataActionDeck.add("Demi-tour");
+        dataActionDeck.add("Tourner à gauche");
+        dataActionDeck.add("Tourner à droite");
+        dataActionDeck.add("Demi-tour");
+
+
+        dataPrioriteDeck.add(50);
+        dataPrioriteDeck.add(250);
+        dataPrioriteDeck.add(550);
+        dataPrioriteDeck.add(50);
+        dataPrioriteDeck.add(250);
+        dataPrioriteDeck.add(550);
+
+
+        final StringAdapter adapter = new StringAdapter(getApplicationContext(), dataActionDeck,dataPrioriteDeck);
+        final StringAdapter adapter2 = new StringAdapter(getApplicationContext(), dataActionSelected,dataPrioriteSelected);
         // On dit à la ListView de se remplir via cet adapter
         handCards.setAdapter(adapter);
+        selectedCards.setAdapter(adapter2);
         /*
          * Si vos données changent, penser à utiliser
          * la fonction adapter.notifyDataSetChanged();
@@ -45,10 +68,124 @@ public class SelectedCards extends ActionBarActivity {
         * et de recharger la liste automatiquement.
         */
         adapter.notifyDataSetChanged();
+        adapter2.notifyDataSetChanged();
 
+        handCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (dataActionSelected.size() >= 5) {
+
+                    Toast.makeText(getApplicationContext(),"Vous avez déjà selectionné 5 cartes", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    dataActionSelected.add(dataActionDeck.get(position));
+                    dataPrioriteSelected.add(dataPrioriteDeck.get(position));
+
+                    dataActionDeck.remove(position);
+                    dataPrioriteDeck.remove(position);
+                    adapter.notifyDataSetChanged();
+                    adapter2.notifyDataSetChanged();
+
+                }
+
+            }
+        });
+        selectedCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dataActionDeck.add(dataActionSelected.get(position));
+                dataPrioriteDeck.add(dataPrioriteSelected.get(position));
+
+                dataActionSelected.remove(position);
+                dataPrioriteSelected.remove(position);
+                adapter.notifyDataSetChanged();
+                adapter2.notifyDataSetChanged();
+
+            }
+        });
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+    }
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntegerArrayList("dataPrioriteDeck", dataPrioriteDeck);
+        outState.putIntegerArrayList("dataPrioriteSelected" , (ArrayList<Integer>) dataPrioriteSelected);
+
+        outState.putStringArrayList("dataActionDeck",  dataActionDeck);
+
+        outState.putStringArrayList("dataActionSelected" , (ArrayList<String>) dataActionSelected);
 
     }
 
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        dataPrioriteDeck = savedInstanceState.getIntegerArrayList("dataPrioriteDeck");
+        dataActionDeck = savedInstanceState.getStringArrayList("dataActionDeck");
+        dataActionSelected = savedInstanceState.getStringArrayList("dataActionSelected");
+        dataPrioriteSelected = savedInstanceState.getIntegerArrayList("dataPrioriteSelected");
+
+
+        final StringAdapter adapter = new StringAdapter(getApplicationContext(), dataActionDeck,dataPrioriteDeck);
+        final StringAdapter adapter2 = new StringAdapter(getApplicationContext(), dataActionSelected,dataPrioriteSelected);
+        // On dit à la ListView de se remplir via cet adapter
+        handCards.setAdapter(adapter);
+        selectedCards.setAdapter(adapter2);
+        /*
+         * Si vos données changent, penser à utiliser
+         * la fonction adapter.notifyDataSetChanged();
+        * qui aura pour effet de notifier le changement de données
+        * et de recharger la liste automatiquement.
+        */
+        adapter.notifyDataSetChanged();
+        adapter2.notifyDataSetChanged();
+
+        handCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (dataActionSelected.size() >= 5) {
+
+                    Toast.makeText(getApplicationContext(),"Vous avez déjà selectionné 5 cartes", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    dataActionSelected.add(dataActionDeck.get(position));
+                    dataPrioriteSelected.add(dataPrioriteDeck.get(position));
+
+                    dataActionDeck.remove(position);
+                    dataPrioriteDeck.remove(position);
+                    adapter.notifyDataSetChanged();
+                    adapter2.notifyDataSetChanged();
+
+                }
+
+            }
+        });
+        selectedCards.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                dataActionDeck.add(dataActionSelected.get(position));
+                dataPrioriteDeck.add(dataPrioriteSelected.get(position));
+
+                dataActionSelected.remove(position);
+                dataPrioriteSelected.remove(position);
+                adapter.notifyDataSetChanged();
+                adapter2.notifyDataSetChanged();
+
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,4 +208,5 @@ public class SelectedCards extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

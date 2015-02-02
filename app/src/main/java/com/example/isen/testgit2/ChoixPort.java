@@ -105,6 +105,7 @@ public class ChoixPort extends Activity {
                 InputStream inputStream = socket.getInputStream();
 
 
+
     /*
      * notice:
      * inputStream.read() will block if no data return

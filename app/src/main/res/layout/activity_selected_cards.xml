@@ -7,52 +7,69 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.isen.testgit2.SelectedCards">
 
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liste des cartes selectionnées"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal|top"
+        android:visibility="visible"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="146dp"
+        android:id="@+id/listViewSelectedCards"
+        android:layout_gravity="center_horizontal|top"
+        android:footerDividersEnabled="false"
+        android:focusableInTouchMode="false"
+        android:fastScrollAlwaysVisible="false"
+        android:visibility="visible"
+        android:choiceMode="multipleChoice"
+        style="@style/AppTheme"
+        android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/LayoutPrincipal">
+        android:layout_above="@+id/textView3" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Liste des cartes selectionnées"
-            android:id="@+id/textView2"
-            android:layout_gravity="center_horizontal|top"
-            android:visibility="visible" />
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="148dp"
+        android:id="@+id/listViewHandCards"
+        android:layout_gravity="center_horizontal|bottom"
+        android:visibility="visible"
+        android:choiceMode="singleChoice"
+        style="@style/AppTheme"
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView3" />
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="146dp"
-            android:id="@+id/listViewSelectedCards"
-            android:layout_gravity="center_horizontal|top"
-            android:footerDividersEnabled="false"
-            android:focusableInTouchMode="false"
-            android:fastScrollAlwaysVisible="false"
-            android:visibility="visible"
-            android:choiceMode="multipleChoice"
-            style="@style/AppTheme" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liste de cartes en main"
+        android:id="@+id/textView3"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:lines="1"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp" />
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="148dp"
-            android:id="@+id/listViewHandCards"
-            android:layout_gravity="center_horizontal|bottom"
-            android:visibility="visible"
-            android:choiceMode="singleChoice"
-            style="@style/AppTheme"
-            android:clickable="true" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/buttonBack"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Liste de cartes en main"
-            android:id="@+id/textView3"
-            android:layout_gravity="center"
-            android:visibility="visible" />
-    </FrameLayout>
 </RelativeLayout>

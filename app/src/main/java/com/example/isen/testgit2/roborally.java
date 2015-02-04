@@ -1,6 +1,7 @@
 package com.example.isen.testgit2;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class roborally extends ActionBarActivity {
     private Button optionCards;
     private Button listCards;
     private CheckBox isReady;
+    private Client mClient;
 
 
     ArrayList<Integer> dataPrioriteDeck = new ArrayList<Integer>();
@@ -48,7 +51,7 @@ public class roborally extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
 
 
-
+        new connectTask().execute("");
 
         if (extras == null) {
             //On récupére nos cartes via le serveur
@@ -69,6 +72,7 @@ public class roborally extends ActionBarActivity {
             dataPrioriteDeck.add(550);
         }
         else {
+            //this.mClient=(Client)extras.getParcelable("client");
             dataActionDeck = extras.getStringArrayList("dataActionDeck");
             dataActionSelected = extras.getStringArrayList("dataActionSelected");
             dataPrioriteDeck = extras.getIntegerArrayList("dataPrioriteDeck");
@@ -107,7 +111,11 @@ public class roborally extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (isReady.isChecked()) {
-
+                    if(mClient != null){
+                        Toast.makeText(getApplicationContext(), "La connection est intacte !",Toast.LENGTH_SHORT).show();                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "La connection a été perdu !",Toast.LENGTH_SHORT).show();
+                    }
 
                 }
                 else {
@@ -140,5 +148,32 @@ public class roborally extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class connectTask extends AsyncTask<String,String,Client> {
+
+        @Override
+        protected Client doInBackground(String... message) {
+
+            //we create a Client object and
+            mClient = new Client(new Client.OnMessageReceived() {
+                @Override
+                //here the messageReceived method is implemented
+                public void messageReceived(String message) {
+                    //this method calls the onProgressUpdate
+                    publishProgress(message);
+                }
+            });
+            mClient.run();
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+
+
+        }
     }
 }

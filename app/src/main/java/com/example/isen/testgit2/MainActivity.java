@@ -111,6 +111,7 @@ public class MainActivity extends ActionBarActivity {
             int size = arrayList.size();
             if(arrayList.get(size-1).equals("La partie va commencer...")){
                 Intent intent = new Intent(getApplicationContext(), roborally.class);
+                intent.putExtra("client",mClient);
                 //intent.putExtra("client", (Parcelable) mClient);
                 startActivity(intent);
             }

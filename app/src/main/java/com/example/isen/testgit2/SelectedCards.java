@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ public class SelectedCards extends ActionBarActivity {
     private ListView selectedCards;
     private ListView handCards;
     private Button buttonBack;
+    private Client mClient;
+
 
     ArrayList<Integer> dataPrioriteDeck = new ArrayList<Integer>();
     ArrayList<Integer> dataPrioriteSelected = new ArrayList<Integer>();
@@ -45,6 +48,8 @@ public class SelectedCards extends ActionBarActivity {
 
 
         if (intent != null) {
+            this.mClient=getIntent().getParcelableExtra("client");
+
             dataActionDeck = intent.getStringArrayListExtra("dataActionDeck");
             dataActionSelected = intent.getStringArrayListExtra("dataActionSelected");
             dataPrioriteDeck = intent.getIntegerArrayListExtra("dataPrioriteDeck");
@@ -106,6 +111,7 @@ public class SelectedCards extends ActionBarActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getBaseContext(), roborally.class);
+                intent.putExtra("client",mClient);
                 intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteDeck",dataPrioriteDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteSelected",dataPrioriteSelected);

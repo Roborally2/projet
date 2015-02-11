@@ -1,5 +1,7 @@
 package com.example.isen.testgit2;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -13,7 +15,7 @@ import java.net.Socket;
 /**
  * Created by isen on 28/01/2015.
  */
-public class Client {
+public class Client implements Parcelable{
     private String serverMessage;
     public static  String SERVERIP ; // your computer IP
     // address
@@ -33,6 +35,31 @@ public class Client {
 
     }
 
+    public Client(Parcel in){
+        String[] strData = new String[2];
+        boolean[] boolData = new boolean[1];
+        in.readStringArray(strData);
+        this.serverMessage = strData[1];
+        this.SERVERIP = strData[0];
+        in.readBooleanArray(boolData);
+        this.mRun = boolData[0];
+    }
+
+
+
+
+    public static final Parcelable.Creator<Client> CREATOR= new Parcelable.Creator<Client>() {
+
+        @Override
+        public Client createFromParcel(Parcel source) {
+            return new Client(source);  //using parcelable constructor
+        }
+
+        @Override
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
     /**
      * Sends the message entered by client to the server
      *
@@ -112,6 +139,17 @@ public class Client {
 
         }
 
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[]{this.serverMessage, this.SERVERIP});
+        dest.writeBooleanArray(new boolean[]{this.mRun});
     }
 
     // Declare the interface. The method messageReceived(String message) will

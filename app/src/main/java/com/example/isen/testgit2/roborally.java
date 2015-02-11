@@ -49,12 +49,13 @@ public class roborally extends ActionBarActivity {
 
         Intent intent = getIntent();
         Bundle extras = getIntent().getExtras();
+        this.mClient=getIntent().getParcelableExtra("client");
 
+        //new connectTask().execute("");
 
-        new connectTask().execute("");
-
-        if (extras == null) {
+        if (extras.getStringArrayList("dataActionDeck")==null && extras.getStringArrayList("dataActionSelected")==null) {
             //On récupére nos cartes via le serveur
+            this.mClient=getIntent().getParcelableExtra("client");
 
             dataActionDeck.add("Tourner à gauche");
             dataActionDeck.add("Tourner à droite");
@@ -72,7 +73,8 @@ public class roborally extends ActionBarActivity {
             dataPrioriteDeck.add(550);
         }
         else {
-            //this.mClient=(Client)extras.getParcelable("client");
+            this.mClient=getIntent().getParcelableExtra("client");
+
             dataActionDeck = extras.getStringArrayList("dataActionDeck");
             dataActionSelected = extras.getStringArrayList("dataActionSelected");
             dataPrioriteDeck = extras.getIntegerArrayList("dataPrioriteDeck");
@@ -92,6 +94,7 @@ public class roborally extends ActionBarActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(roborally.this,SelectedCards.class);
+                intent.putExtra("client",mClient);
                 intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteDeck",dataPrioriteDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteSelected",dataPrioriteSelected);

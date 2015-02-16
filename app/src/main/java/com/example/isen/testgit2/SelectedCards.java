@@ -25,10 +25,10 @@ public class SelectedCards extends ActionBarActivity {
     private Client mClient;
 
 
-    ArrayList<Integer> dataPrioriteDeck = new ArrayList<>();
-    ArrayList<Integer> dataPrioriteSelected = new ArrayList<>();
-    ArrayList<String> dataActionDeck = new ArrayList<>();
-    ArrayList<String> dataActionSelected = new ArrayList<>();
+    private ArrayList<Integer> dataPrioriteDeck = new ArrayList<>();
+    private ArrayList<Integer> dataPrioriteSelected = new ArrayList<>();
+    private ArrayList<String> dataActionDeck = new ArrayList<>();
+    private ArrayList<String> dataActionSelected = new ArrayList<>();
 
 
 
@@ -54,6 +54,19 @@ public class SelectedCards extends ActionBarActivity {
             dataActionSelected = intent.getStringArrayListExtra("dataActionSelected");
             dataPrioriteDeck = intent.getIntegerArrayListExtra("dataPrioriteDeck");
             dataPrioriteSelected = intent.getIntegerArrayListExtra("dataPrioriteSelected");
+            if(dataActionSelected==null){
+                dataActionSelected = new ArrayList<>();
+            }
+            if(dataPrioriteSelected==null){
+                dataPrioriteSelected = new ArrayList<>();
+            }
+            if(dataActionDeck == null){
+                dataActionDeck = new ArrayList<>();
+            }
+            if(dataPrioriteDeck==null){
+                dataPrioriteDeck= new ArrayList<>();
+            }
+
 
         }
 

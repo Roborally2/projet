@@ -25,10 +25,10 @@ public class SelectedCards extends ActionBarActivity {
     private Client mClient;
 
 
-    ArrayList<Integer> dataPrioriteDeck = new ArrayList<Integer>();
-    ArrayList<Integer> dataPrioriteSelected = new ArrayList<Integer>();
-    ArrayList<String> dataActionDeck = new ArrayList<String>();
-    ArrayList<String> dataActionSelected = new ArrayList<String>();
+    ArrayList<Integer> dataPrioriteDeck = new ArrayList<>();
+    ArrayList<Integer> dataPrioriteSelected = new ArrayList<>();
+    ArrayList<String> dataActionDeck = new ArrayList<>();
+    ArrayList<String> dataActionSelected = new ArrayList<>();
 
 
 
@@ -75,7 +75,7 @@ public class SelectedCards extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (dataActionSelected.size() >= 5) {
+                if (dataActionSelected!= null && dataActionSelected.size() >= 5) {
 
                     Toast.makeText(getApplicationContext(),"Vous avez déjà selectionné 5 cartes", Toast.LENGTH_SHORT).show();
                 }

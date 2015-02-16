@@ -21,9 +21,14 @@ public class MainActivity extends ActionBarActivity {
 
     private ListView mList;
     private ArrayList<String> arrayList;
+    private ArrayList<String> arrayList2;
+    private ArrayList<Integer> arrayList3;
     private MyCustomAdapter mAdapter;
+    private MyCustomAdapter mAdapter2;
     private Client mClient;
     private CheckBox pret;
+    private int i=1;
+    private boolean ok=false;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -31,7 +36,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        arrayList = new ArrayList<String>();
+        arrayList = new ArrayList<>();
+        arrayList2 = new ArrayList<String>();
+        arrayList3 = new ArrayList<Integer>();
 
         final EditText editText = (EditText) findViewById(R.id.editText);
         Button send = (Button)findViewById(R.id.send_button);
@@ -41,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
         pret = (CheckBox)findViewById(R.id.checkBox);
         mAdapter = new MyCustomAdapter(this, arrayList);
         mList.setAdapter((android.widget.ListAdapter) mAdapter);
+
 
         // connect to the server
         new connectTask().execute("");
@@ -77,6 +85,7 @@ public class MainActivity extends ActionBarActivity {
 
                 //refresh the list
                 mAdapter.notifyDataSetChanged();
+
                 editText.setText("");
             }
         });
@@ -107,18 +116,37 @@ public class MainActivity extends ActionBarActivity {
             super.onProgressUpdate(values);
 
             //in the arrayList we add the messaged received from server
-            arrayList.add(values[0]);
-            int size = arrayList.size();
-            if(arrayList.get(size-1).equals("La partie va commencer...")){
-                Intent intent = new Intent(getApplicationContext(), roborally.class);
-                intent.putExtra("client",mClient);
-                //intent.putExtra("client", (Parcelable) mClient);
-                startActivity(intent);
+            if(!ok){
+                arrayList.add(values[0]);
             }
+            else if (arrayList2.size()!=9){
+                arrayList2.add(values[0]);
+            }
+            else if (arrayList3.size()!=9){
+                arrayList3.add(Integer.parseInt(values[0]));
+            }
+
+            int size = arrayList.size();
+            if(arrayList.get(size-1).equals("La partie va commencer...")) {
+                ok = true;
+
+            }
+                if ( arrayList3.size() == 9 && arrayList2.size()==9){
+                    Intent intent = new Intent(getApplicationContext(), roborally.class);
+                    intent.putExtra("client",mClient);
+                    intent.putStringArrayListExtra("dataActionDeck",arrayList2);
+                    intent.putIntegerArrayListExtra("dataPrioriteDeck",arrayList3);
+                    //intent.putExtra("client", (Parcelable) mClient);
+                    startActivity(intent);
+                }
+
+
+
 
             // notify the adapter that the data set has changed. This means that new message received
             // from server was added to the list
             mAdapter.notifyDataSetChanged();
+
         }
     }
 }

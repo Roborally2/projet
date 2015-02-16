@@ -104,6 +104,18 @@ public class roborally extends ActionBarActivity {
             dataPrioriteSelected = extras.getIntegerArrayList("dataPrioriteSelected");
 
         }
+        if(dataActionSelected==null){
+            dataActionSelected = new ArrayList<>();
+        }
+        if(dataPrioriteSelected==null){
+            dataPrioriteSelected = new ArrayList<>();
+        }
+        if(dataActionDeck == null){
+            dataActionDeck = new ArrayList<>();
+        }
+        if(dataPrioriteDeck==null){
+            dataPrioriteDeck= new ArrayList<>();
+        }
 
 
         optionCards.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +150,11 @@ public class roborally extends ActionBarActivity {
             public void onClick(View v) {
                 if (isReady.isChecked()) {
                     if (dataActionSelected.size()==5 && dataPrioriteSelected.size()==5) {
-                        //on envoie
+                        mClient.sendMessage("pret2");
+                        for (String a : dataActionSelected) {
+                            mClient.sendMessage(a);
+                        }
+
                     } else {
                         Toast.makeText(getApplicationContext(), "Veuillez sélectionner 5 cartes !", Toast.LENGTH_SHORT).show();
                     }

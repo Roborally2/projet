@@ -32,6 +32,7 @@ public class SelectedCards extends ActionBarActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class SelectedCards extends ActionBarActivity {
             if(dataPrioriteDeck==null){
                 dataPrioriteDeck= new ArrayList<>();
             }
+
 
 
         }

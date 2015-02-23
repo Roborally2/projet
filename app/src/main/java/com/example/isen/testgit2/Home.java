@@ -21,6 +21,7 @@ public class Home extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ipAdress=(EditText) findViewById(R.id.editText1);
+        ipAdress.setText("172.18.0.193");
         connect=(Button)findViewById(R.id.button1);
         connect.setOnClickListener(new View.OnClickListener() {
 

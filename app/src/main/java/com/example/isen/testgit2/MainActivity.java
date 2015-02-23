@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<String> arrayList;
     private ArrayList<String> arrayList2;
     private ArrayList<Integer> arrayList3;
+    private ArrayList<String> arrayListInformations;
     private MyCustomAdapter mAdapter;
     private MyCustomAdapter mAdapter2;
     private Client mClient;
@@ -39,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
         arrayList = new ArrayList<>();
         arrayList2 = new ArrayList<String>();
         arrayList3 = new ArrayList<Integer>();
+        arrayListInformations = new ArrayList<String>();
 
         final EditText editText = (EditText) findViewById(R.id.editText);
         Button send = (Button)findViewById(R.id.send_button);
@@ -125,17 +127,21 @@ public class MainActivity extends ActionBarActivity {
             else if (arrayList3.size()!=9){
                 arrayList3.add(Integer.parseInt(values[0]));
             }
+            else if(arrayListInformations.size()!=4){
+                arrayListInformations.add(values[0]);
+            }
 
             int size = arrayList.size();
             if(arrayList.get(size-1).equals("La partie va commencer...")) {
                 ok = true;
 
             }
-                if ( arrayList3.size() == 9 && arrayList2.size()==9){
+                if ( arrayList3.size() == 9 && arrayList2.size()==9 && arrayListInformations.size() ==4){
                     Intent intent = new Intent(getApplicationContext(), roborally.class);
                     intent.putExtra("client",mClient);
                     intent.putStringArrayListExtra("dataActionDeck",arrayList2);
                     intent.putIntegerArrayListExtra("dataPrioriteDeck",arrayList3);
+                    intent.putStringArrayListExtra("information", arrayListInformations);
                     //intent.putExtra("client", (Parcelable) mClient);
                     startActivity(intent);
                 }

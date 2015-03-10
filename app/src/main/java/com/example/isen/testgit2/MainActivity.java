@@ -142,7 +142,6 @@ public class MainActivity extends ActionBarActivity {
                     intent.putStringArrayListExtra("dataActionDeck",arrayList2);
                     intent.putIntegerArrayListExtra("dataPrioriteDeck",arrayList3);
                     intent.putStringArrayListExtra("information", arrayListInformations);
-                    //intent.putExtra("client", (Parcelable) mClient);
                     startActivity(intent);
                 }
 

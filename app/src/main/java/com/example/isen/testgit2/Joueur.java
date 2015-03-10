@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by isen on 19/02/2015.
  */
-public class Joueur {
+public class Joueur implements Parcelable {
     protected int id;
     protected String username;
     protected int vie;
@@ -19,13 +19,24 @@ public class Joueur {
         this.degats = Integer.parseInt(degats);
     }
 
-    /*public Joueur(Parcel in){
-        String[] strData = new String[4];
-        in.readStringArray(strData);
-        this.id = strData[0];
-        this.username = strData[1];
-        this.vie = strData[2];
-        this.degats = strData[3];
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.username);
+        dest.writeInt(this.vie);
+        dest.writeInt(this.degats);
+    }
+
+    public Joueur(Parcel in){
+        this.id = in.readInt();
+        this.username = in.readString();
+        this.vie = in.readInt();
+        this.degats = in.readInt();
 
     }
 
@@ -43,8 +54,5 @@ public class Joueur {
         }
     };
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{this.id, this.username,this.vie,this.degats});
-    }*/
+
 }

@@ -23,7 +23,7 @@ public class SelectedCards extends ActionBarActivity {
     private ListView handCards;
     private Button buttonBack;
     private Client mClient;
-
+    private Joueur robot;
 
     private ArrayList<Integer> dataPrioriteDeck = new ArrayList<>();
     private ArrayList<Integer> dataPrioriteSelected = new ArrayList<>();
@@ -35,26 +35,21 @@ public class SelectedCards extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_selected_cards);
-
         Intent intent = getIntent();
-
         selectedCards = (ListView) findViewById(R.id.listViewSelectedCards);
         handCards = (ListView) findViewById(R.id.listViewHandCards);
-
         buttonBack = (Button) findViewById(R.id.buttonBack);
-
         this.mClient = Client.getInstance();
 
         if (intent != null) {
-            //this.mClient=getIntent().getParcelableExtra("client");
-
             dataActionDeck = intent.getStringArrayListExtra("dataActionDeck");
             dataActionSelected = intent.getStringArrayListExtra("dataActionSelected");
             dataPrioriteDeck = intent.getIntegerArrayListExtra("dataPrioriteDeck");
             dataPrioriteSelected = intent.getIntegerArrayListExtra("dataPrioriteSelected");
+            robot = intent.getExtras().getParcelable("joueur");
             if(dataActionSelected==null){
                 dataActionSelected = new ArrayList<>();
             }
@@ -126,11 +121,11 @@ public class SelectedCards extends ActionBarActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getBaseContext(), roborally.class);
-                //intent.putExtra("client",mClient);
                 intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteDeck",dataPrioriteDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteSelected",dataPrioriteSelected);
                 intent.putStringArrayListExtra("dataActionSelected",dataActionSelected);
+                intent.putExtra("joueur",robot);
                 startActivity(intent);
 
             }

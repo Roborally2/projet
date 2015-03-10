@@ -49,7 +49,7 @@ public class roborally extends ActionBarActivity {
     private Button listCards;
     private CheckBox isReady;
     private Client mClient;
-    //private Joueur robot;
+    private Joueur robot;
     private TextView numberCardSelected;
     private ArrayList<String> listeMessagesReçu;
     private boolean powerd;
@@ -84,30 +84,16 @@ public class roborally extends ActionBarActivity {
 
         if (extras.getStringArrayList("dataActionDeck") == null && extras.getStringArrayList("dataActionSelected") == null) {
             //On récupére nos cartes via le serveur
-
-            //this.mClient = getIntent().getParcelableExtra("client");
-
-            /*dataActionDeck.add("Tourner à gauche");
-            dataActionDeck.add("Tourner à droite");
-            dataActionDeck.add("Demi-tour");
-            dataActionDeck.add("Tourner à gauche");
-            dataActionDeck.add("Tourner à droite");
-            dataActionDeck.add("Demi-tour");
-
-
-            dataPrioriteDeck.add(50);
-            dataPrioriteDeck.add(250);
-            dataPrioriteDeck.add(550);
-            dataPrioriteDeck.add(50);
-            dataPrioriteDeck.add(250);
-            dataPrioriteDeck.add(550);*/
+            // MAJ du client android -> informations sur le joueurs !!!!!!!   NE PAS EFFACER !!!!!!!!!!!!
         } else {
-            //this.mClient = getIntent().getParcelableExtra("client");
+
             informations = extras.getStringArrayList("information");
             dataActionDeck = extras.getStringArrayList("dataActionDeck");
             dataActionSelected = extras.getStringArrayList("dataActionSelected");
             dataPrioriteDeck = extras.getIntegerArrayList("dataPrioriteDeck");
             dataPrioriteSelected = extras.getIntegerArrayList("dataPrioriteSelected");
+
+
 
 
         }
@@ -127,12 +113,15 @@ public class roborally extends ActionBarActivity {
             dataPrioriteDeck= new ArrayList<>();
         }
 
-        // MAJ du client android -> informations sur le joueurs !!!!!!!   NE PAS EFFACER !!!!!!!!!!!!
-
-        /*robot = new Joueur(informations.get(0),informations.get(1),informations.get(2),informations.get(3));
+        if(extras.getParcelable("joueur")==null){
+            robot = new Joueur(informations.get(0),informations.get(1),informations.get(2),informations.get(3));
+        }
+        else{
+            robot = extras.getParcelable("joueur");
+        }
         numberLife.setText("Nombre de vie : "+robot.vie);
         numberDegats.setText("Nombre de dégats : "+robot.degats);
-        numberCardSelected.setText("Vous avez sélectionné "+dataActionSelected.size()+" cartes sur 5 !");*/
+        numberCardSelected.setText("Vous avez sélectionné "+dataActionSelected.size()+" cartes sur 5 !");
 
 
         optionCards.setOnClickListener(new View.OnClickListener() {
@@ -146,12 +135,13 @@ public class roborally extends ActionBarActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(roborally.this, SelectedCards.class);
-                //intent.putExtra("client", mClient);
                 intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteDeck", dataPrioriteDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteSelected", dataPrioriteSelected);
                 intent.putStringArrayListExtra("dataActionSelected", dataActionSelected);
                 intent.putStringArrayListExtra("information",informations);
+                intent.putExtra("joueur",robot);
+
 
                 startActivity(intent);
 
@@ -176,7 +166,6 @@ public class roborally extends ActionBarActivity {
                 if (isReady.isChecked()) {
                     if (dataActionSelected.size()==5 && dataPrioriteSelected.size()==5) {
                         if(mClient!=null){
-                            //mClient.sendMessage("retour");
                             Toast.makeText(getApplicationContext(), "envoi effectué", Toast.LENGTH_SHORT).show();
                             for (String a : dataActionSelected) {
                                 mClient.sendMessage("retour_action"+a);

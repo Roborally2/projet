@@ -49,10 +49,10 @@ public class roborally extends ActionBarActivity {
     private Button listCards;
     private CheckBox isReady;
     private Client mClient;
-    private Client mmClient;
     //private Joueur robot;
     private TextView numberCardSelected;
-
+    private ArrayList<String> listeMessagesReçu;
+    private boolean powerd;
 
     ArrayList<Integer> dataPrioriteDeck = new ArrayList<Integer>();
     ArrayList<Integer> dataPrioriteSelected = new ArrayList<Integer>();
@@ -65,6 +65,7 @@ public class roborally extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_roborally);
 
+        listeMessagesReçu = new ArrayList<>();
         powerDown = (Button) findViewById(R.id.buttonPowerDown);
         numberLife = (TextView) findViewById((R.id.textViewNumberLife));
         numberDegats = (TextView) findViewById(R.id.textViewNumberDegats);
@@ -73,11 +74,11 @@ public class roborally extends ActionBarActivity {
         optionCards = (Button) findViewById(R.id.buttonSelectedCards);
         listCards = (Button) findViewById(R.id.buttonListCards);
         isReady = (CheckBox) findViewById(R.id.checkBoxIsReady);
-
+        powerd=false;
 
         Intent intent = getIntent();
         Bundle extras = getIntent().getExtras();
-        this.mClient = getIntent().getParcelableExtra("client");
+        this.mClient = Client.getInstance();
 
         new connectTask().execute("");
 
@@ -101,7 +102,7 @@ public class roborally extends ActionBarActivity {
             dataPrioriteDeck.add(250);
             dataPrioriteDeck.add(550);*/
         } else {
-            this.mClient = getIntent().getParcelableExtra("client");
+            //this.mClient = getIntent().getParcelableExtra("client");
             informations = extras.getStringArrayList("information");
             dataActionDeck = extras.getStringArrayList("dataActionDeck");
             dataActionSelected = extras.getStringArrayList("dataActionSelected");
@@ -145,7 +146,7 @@ public class roborally extends ActionBarActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(roborally.this, SelectedCards.class);
-                intent.putExtra("client", mClient);
+                //intent.putExtra("client", mClient);
                 intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteDeck", dataPrioriteDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteSelected", dataPrioriteSelected);
@@ -159,30 +160,43 @@ public class roborally extends ActionBarActivity {
         powerDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(powerd==false){
+                    powerd=true;
+                    Toast.makeText(getApplicationContext(), "Powerdown activé", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    powerd=false;
+                    Toast.makeText(getApplicationContext(), "Powerdown désactivé", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         isReady.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isReady.isChecked()) {
-                    //if (dataActionSelected.size()==5 && dataPrioriteSelected.size()==5) {
+                    if (dataActionSelected.size()==5 && dataPrioriteSelected.size()==5) {
                         if(mClient!=null){
-                            mClient.sendMessage("retour");
-                            Toast.makeText(getApplicationContext(), "envoie de retour", Toast.LENGTH_SHORT).show();
-                            /*for (String a : dataActionSelected) {
-                                mClient.sendMessage(a);
-                            }*/
+                            //mClient.sendMessage("retour");
+                            Toast.makeText(getApplicationContext(), "envoi effectué", Toast.LENGTH_SHORT).show();
+                            for (String a : dataActionSelected) {
+                                mClient.sendMessage("retour_action"+a);
+                            }
+                            for (int a : dataPrioriteSelected) {
+                                mClient.sendMessage("retour_priorite"+a);
+                            }
+                            if (powerd==false){
+                                mClient.sendMessage("retour_powerdownfalse");
+                            }
+                            if(powerd==true){
+                                mClient.sendMessage("retour_powerdowntrue");
+                            }
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "Problème client", Toast.LENGTH_SHORT).show();
                         }
-
-
-
-                   /* } else {
+                    } else {
                         Toast.makeText(getApplicationContext(), "Veuillez sélectionner 5 cartes !", Toast.LENGTH_SHORT).show();
-                    }*/
+                    }
 
                 } else {
 
@@ -231,8 +245,7 @@ public class roborally extends ActionBarActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-
-
+            Toast.makeText(getApplicationContext(), values[0], Toast.LENGTH_SHORT).show();
         }
     }
 

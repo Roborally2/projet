@@ -46,10 +46,10 @@ public class SelectedCards extends ActionBarActivity {
 
         buttonBack = (Button) findViewById(R.id.buttonBack);
 
-
+        this.mClient = Client.getInstance();
 
         if (intent != null) {
-            this.mClient=getIntent().getParcelableExtra("client");
+            //this.mClient=getIntent().getParcelableExtra("client");
 
             dataActionDeck = intent.getStringArrayListExtra("dataActionDeck");
             dataActionSelected = intent.getStringArrayListExtra("dataActionSelected");
@@ -126,7 +126,7 @@ public class SelectedCards extends ActionBarActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(getBaseContext(), roborally.class);
-                intent.putExtra("client",mClient);
+                //intent.putExtra("client",mClient);
                 intent.putStringArrayListExtra("dataActionDeck", dataActionDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteDeck",dataPrioriteDeck);
                 intent.putIntegerArrayListExtra("dataPrioriteSelected",dataPrioriteSelected);

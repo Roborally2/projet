@@ -109,8 +109,9 @@ public class MainActivity extends ActionBarActivity {
                 }
             });
             mClient.run();
-
+            Client.setInstance(mClient);
             return null;
+
         }
 
         @Override
@@ -138,7 +139,6 @@ public class MainActivity extends ActionBarActivity {
             }
                 if ( arrayList3.size() == 9 && arrayList2.size()==9 && arrayListInformations.size() ==4){
                     Intent intent = new Intent(getApplicationContext(), roborally.class);
-                    intent.putExtra("client",mClient);
                     intent.putStringArrayListExtra("dataActionDeck",arrayList2);
                     intent.putIntegerArrayListExtra("dataPrioriteDeck",arrayList3);
                     intent.putStringArrayListExtra("information", arrayListInformations);

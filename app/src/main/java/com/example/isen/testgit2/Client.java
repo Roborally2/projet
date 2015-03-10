@@ -15,7 +15,9 @@ import java.net.Socket;
 /**
  * Created by isen on 28/01/2015.
  */
-public class Client implements Parcelable{
+public class Client {
+    private static Socket firstSocket=null;
+    private static Client firstInstance=null;
     private String serverMessage;
     public static  String SERVERIP ; // your computer IP
     // address
@@ -32,10 +34,21 @@ public class Client implements Parcelable{
      */
     public Client(OnMessageReceived listener) {
         mMessageListener = listener;
-
+        if (firstInstance==null){
+            firstInstance=this;
+        }
     }
 
-    public Client(Parcel in){
+
+    public static Client getInstance() {
+        	        return firstInstance;
+            }
+
+    public static void setInstance(Client client){
+        firstInstance=client;
+    }
+
+    /*public Client(Parcel in){
         String[] strData = new String[2];
         boolean[] boolData = new boolean[1];
         in.readStringArray(strData);
@@ -43,12 +56,15 @@ public class Client implements Parcelable{
         this.SERVERIP = strData[0];
         in.readBooleanArray(boolData);
         this.mRun = boolData[0];
-    }
+    }*/
 
 
 
 
-    public static final Parcelable.Creator<Client> CREATOR= new Parcelable.Creator<Client>() {
+
+
+
+   /*public static final Parcelable.Creator<Client> CREATOR= new Parcelable.Creator<Client>() {
 
         @Override
         public Client createFromParcel(Parcel source) {
@@ -59,7 +75,7 @@ public class Client implements Parcelable{
         public Client[] newArray(int size) {
             return new Client[size];
         }
-    };
+    };*/
     /**
      * Sends the message entered by client to the server
      *
@@ -89,13 +105,16 @@ public class Client implements Parcelable{
             Log.e("TCP Client", "C: Connecting...");
 
             // create a socket to make the connection with the server
-            Socket socket = new Socket(serverAddr, SERVERPORT);
+            if(firstSocket==null){
+                firstSocket = new Socket(serverAddr, SERVERPORT);
+            }
+
             Log.e("TCP Server IP", SERVERIP);
             try {
 
                 // send the message to the server
                 out = new PrintWriter(new BufferedWriter(
-                        new OutputStreamWriter(socket.getOutputStream())), true);
+                        new OutputStreamWriter(firstSocket.getOutputStream())), true);
 
                 Log.e("TCP Client", "C: Sent.");
 
@@ -103,7 +122,7 @@ public class Client implements Parcelable{
 
                 // receive the message which the server sends back
                 in = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream()));
+                        firstSocket.getInputStream()));
 
                 // in this while the client listens for the messages sent by the
                 // server
@@ -130,7 +149,7 @@ public class Client implements Parcelable{
                 // this socket
                 // after it is closed, which means a new socket instance has to
                 // be created.
-                socket.close();
+                //firstSocket.close();
             }
 
         } catch (Exception e) {
@@ -141,7 +160,7 @@ public class Client implements Parcelable{
 
     }
 
-    @Override
+    /*@Override
     public int describeContents() {
         return 0;
     }
@@ -150,7 +169,7 @@ public class Client implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]{this.serverMessage, this.SERVERIP});
         dest.writeBooleanArray(new boolean[]{this.mRun});
-    }
+    }*/
 
     // Declare the interface. The method messageReceived(String message) will
     // must be implemented in the MyActivity

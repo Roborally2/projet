@@ -179,6 +179,8 @@ public class roborally extends ActionBarActivity {
                             if(powerd==true){
                                 mClient.sendMessage("retour_powerdowntrue");
                             }
+                            mClient.sendMessage("/traitement");
+                            isReady.setActivated(false);
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "Problème client", Toast.LENGTH_SHORT).show();

@@ -24,7 +24,6 @@ public class Client {
     public static final int SERVERPORT = 2222;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
-
     PrintWriter out;
     BufferedReader in;
 

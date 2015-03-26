@@ -173,14 +173,15 @@ public class roborally extends ActionBarActivity {
                             for (int a : dataPrioriteSelected) {
                                 mClient.sendMessage("retour_priorite"+a);
                             }
-                            if (powerd==false){
+                            /*if (powerd==false){
                                 mClient.sendMessage("retour_powerdownfalse");
                             }
                             if(powerd==true){
                                 mClient.sendMessage("retour_powerdowntrue");
-                            }
+                            }*/
                             mClient.sendMessage("/traitement");
-                            isReady.setActivated(false);
+                            Intent intent = new Intent(roborally.this, test.class);
+                            startActivity(intent);
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "Problème client", Toast.LENGTH_SHORT).show();
@@ -236,7 +237,7 @@ public class roborally extends ActionBarActivity {
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-            Toast.makeText(getApplicationContext(), values[0], Toast.LENGTH_SHORT).show();
+
         }
     }
 
